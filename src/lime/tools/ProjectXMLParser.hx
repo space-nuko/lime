@@ -1494,6 +1494,25 @@ class ProjectXMLParser extends HXProject
 
 						sources.push(path);
 
+					case "mods":
+						var path = Path.combine(extensionPath, substitute(element.att.path));
+
+                        for (file in FileSystem.readDirectory(path))
+                        {
+                            var dirPath = Path.combine(path, file);
+
+                            if (FileSystem.isDirectory(dirPath)
+                                && FileSystem.exists(Path.combine(dirPath, "mod.yml")))
+                            {
+                                var sourcePath = Path.combine(dirPath, "Source");
+
+                                if (FileSystem.isDirectory(sourcePath))
+                                {
+                                    sources.push(sourcePath);
+                                }
+                            }
+                        }
+
 					case "extension":
 
 					// deprecated
